@@ -1,0 +1,40 @@
+{
+  "name": "beta-masas-edenilde",
+  "version": "1.0.0",
+  "description": "Sistema de Padaria Beta Masas Edenilde",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "dist": "electron-builder --publish=never"
+  },
+  "build": {
+    "appId": "com.betamasas.edenilde",
+    "productName": "Beta Masas Edenilde",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^24.6.4",
+    "electron-rebuild": "^3.2.9"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.6"
+  }
+}

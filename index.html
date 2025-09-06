@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta Masas Edenilde - Sistema de Padaria</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-bread-slice"></i> Beta Masas Edenilde</h1>
+            <button id="adminBtn" class="admin-btn">
+                <i class="fas fa-cog"></i> ADM
+            </button>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Sales Form -->
+            <div id="salesSection" class="sales-section">
+                <h2><i class="fas fa-shopping-cart"></i> Registrar Venda</h2>
+                
+                <form id="salesForm" class="sales-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="saleDate">Data/Hora:</label>
+                            <input type="datetime-local" id="saleDate" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="quantity">Quantidade:</label>
+                            <div class="quantity-input">
+                                <input type="number" id="quantity" step="0.01" min="0" required>
+                                <select id="unitType">
+                                    <option value="unidade">Unidade</option>
+                                    <option value="kg">Kg</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productValue">Valor Unitário (R$):</label>
+                            <input type="number" id="productValue" step="0.01" min="0" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="totalValue">Valor Total (R$):</label>
+                            <input type="number" id="totalValue" step="0.01" min="0" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientName">Nome do Cliente:</label>
+                            <div class="search-container">
+                                <input type="text" id="clientName" placeholder="Digite o nome do cliente" required>
+                                <div id="clientSuggestions" class="suggestions"></div>
+                                <button type="button" id="addClientBtn" class="add-btn" style="display: none;">
+                                    <i class="fas fa-plus"></i> Registrar Novo Cliente
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="productName">Produto:</label>
+                            <div class="search-container">
+                                <input type="text" id="productName" placeholder="Digite o nome do produto" required>
+                                <div id="productSuggestions" class="suggestions"></div>
+                                <div id="productNotFound" class="error-message" style="display: none;">
+                                    Produto não encontrado
+                                </div>
+                                <button type="button" id="addProductBtn" class="add-btn" style="display: none;">
+                                    <i class="fas fa-plus"></i> Registrar Produto
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="paymentMethod">Método de Pagamento:</label>
+                            <select id="paymentMethod" required>
+                                <option value="dinheiro">Dinheiro</option>
+                                <option value="fiado">Fiado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="register-btn">
+                        <i class="fas fa-check"></i> Registrar Venda
+                    </button>
+                </form>
+            </div>
+
+            <!-- Admin Section -->
+            <div id="adminSection" class="admin-section" style="display: none;">
+                <!-- Admin Login -->
+                <div id="adminLogin" class="admin-login">
+                    <h2><i class="fas fa-lock"></i> Área Administrativa</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="adminPassword">Senha:</label>
+                            <input type="password" id="adminPassword" required>
+                        </div>
+                        <button type="submit" class="login-btn">
+                            <i class="fas fa-sign-in-alt"></i> Entrar
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Admin Dashboard -->
+                <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+                    <div class="admin-header">
+                        <h2><i class="fas fa-tachometer-alt"></i> Painel Administrativo</h2>
+                        <div class="admin-actions">
+                            <button id="manageClientsBtn" class="action-btn">
+                                <i class="fas fa-users"></i> Gerenciar Clientes
+                            </button>
+                            <button id="manageProductsBtn" class="action-btn">
+                                <i class="fas fa-box"></i> Gerenciar Produtos
+                            </button>
+                            <button id="searchProfileBtn" class="action-btn">
+                                <i class="fas fa-user"></i> Buscar Perfil
+                            </button>
+                            <button id="settingsBtn" class="action-btn">
+                                <i class="fas fa-cog"></i> Configurações
+                            </button>
+                            <button id="exportDataBtn" class="action-btn">
+                                <i class="fas fa-download"></i> Exportar Dados
+                            </button>
+                            <button id="logoutBtn" class="action-btn logout">
+                                <i class="fas fa-sign-out-alt"></i> Sair
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="admin-content">
+                        <!-- Sales Sections -->
+                        <div class="sales-sections">
+                            <!-- Vendas Bruto Section -->
+                            <div class="sales-section-item">
+                                <h3><i class="fas fa-chart-line"></i> Vendas Bruto</h3>
+                                <div class="sales-display">
+                                    <span id="grossSalesValue" class="sales-value">R$ 0,00</span>
+                                    <button id="toggleGrossSales" class="toggle-btn">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Vendas Pagas Section -->
+                            <div class="sales-section-item">
+                                <h3><i class="fas fa-credit-card"></i> Vendas Pagas</h3>
+                                <div class="sales-display">
+                                    <span id="paidSalesValue" class="sales-value">R$ 0,00</span>
+                                    <button id="togglePaidSales" class="toggle-btn">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- General Extract -->
+                        <div class="extract-section">
+                            <h3><i class="fas fa-list"></i> Extrato Geral</h3>
+                            <div class="extract-controls">
+                                <input type="text" id="extractSearch" placeholder="Buscar transações...">
+                            </div>
+                            <div id="generalExtract" class="extract-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modalOverlay" class="modal-overlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle"></h3>
+                <button id="closeModal" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content" id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal-overlay" style="display: none;">
+        <div class="modal confirm-modal">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão</h3>
+            </div>
+            <div class="modal-content">
+                <p>Tem certeza que deseja excluir este registro?</p>
+                <div class="form-group">
+                    <label for="confirmPassword">Digite a senha de administrador:</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <div class="modal-actions">
+                    <button id="confirmDelete" class="btn-danger">Confirmar</button>
+                    <button id="cancelDelete" class="btn-secondary">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Data Modal -->
+    <div id="resetModal" class="modal-overlay" style="display: none;">
+        <div class="modal reset-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Resetar Todos os Dados</h3>
+            </div>
+            <div class="modal-content">
+                <div class="warning-message">
+                    <p><strong>⚠️ ATENÇÃO:</strong> Esta ação irá apagar TODOS os dados do sistema:</p>
+                    <ul>
+                        <li>Todos os clientes cadastrados</li>
+                        <li>Todos os produtos cadastrados</li>
+                        <li>Todas as vendas registradas</li>
+                        <li>Todos os pagamentos registrados</li>
+                        <li>Configurações do administrador</li>
+                    </ul>
+                    <p><strong>Esta ação NÃO pode ser desfeita!</strong></p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="resetPassword1">Digite a senha de administrador:</label>
+                    <input type="password" id="resetPassword1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="resetPassword2">Confirme a senha de administrador:</label>
+                    <input type="password" id="resetPassword2" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="resetConfirmation">Digite "RESETAR" para confirmar:</label>
+                    <input type="text" id="resetConfirmation" placeholder="Digite RESETAR" required>
+                </div>
+                
+                <div class="modal-actions">
+                    <button id="confirmReset" class="btn-danger">Resetar Dados</button>
+                    <button id="cancelReset" class="btn-secondary">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- First Run Setup Modal -->
+    <div id="setupModal" class="modal-overlay" style="display: none;">
+        <div class="modal setup-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-cog"></i> Configuração Inicial</h3>
+            </div>
+            <div class="modal-content">
+                <div class="welcome-message">
+                    <p><strong>🎉 Bem-vindo ao Beta Masas Edenilde!</strong></p>
+                    <p>Este é o primeiro acesso ao sistema. Configure o administrador para começar a usar.</p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="setupAdminName">Nome do Administrador:</label>
+                    <input type="text" id="setupAdminName" placeholder="Digite seu nome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="setupPassword">Senha do Administrador:</label>
+                    <input type="password" id="setupPassword" placeholder="Digite uma senha segura" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="setupConfirmPassword">Confirmar Senha:</label>
+                    <input type="password" id="setupConfirmPassword" placeholder="Confirme a senha" required>
+                </div>
+                
+                <div class="modal-actions">
+                    <button id="confirmSetup" class="register-btn">Configurar Sistema</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

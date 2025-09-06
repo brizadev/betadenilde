@@ -1,0 +1,21 @@
+SISTEMA BETA MASAS EDENILDE
+Sistema de Gerenciamento de Padaria
+
+Copyright (c) 2025 Beta Masas Edenilde
+
+Este software é fornecido "como está", sem garantias de qualquer tipo, expressas ou implícitas, incluindo, mas não limitado a, garantias de comercialização, adequação a um propósito específico e não violação.
+
+Em nenhuma circunstância os autores ou detentores dos direitos autorais serão responsáveis por quaisquer reivindicações, danos ou outras responsabilidades, seja em uma ação de contrato, delito ou de outra forma, decorrentes de, fora de ou em conexão com o software ou o uso ou outras negociações no software.
+
+PERMISSÕES:
+- Uso comercial permitido
+- Modificação permitida
+- Distribuição permitida
+- Uso privado permitido
+
+RESTRIÇÕES:
+- Não há garantia de suporte
+- Sem responsabilidade do autor
+- Sem garantia de funcionamento
+
+Para mais informações, entre em contato com o desenvolvedor.
